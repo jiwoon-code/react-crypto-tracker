@@ -2,15 +2,49 @@ import styled from "styled-components";
 import { useQuery } from "react-query";
 import { fetchCoinTickers } from "../api";
 
-const PriceBox = styled.div``;
-const MarketCap = styled.div``;
-const Volume = styled.div``;
+const PriceBox = styled.div`
+  margin: 0 auto;
+`;
+const PriceDetail = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 25px 0px;
+  gap: 10px;
+`;
+const MarketCap = styled.div`
+  text-align: start;
+  font-size: 16px;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 12px 10px;
+  border-radius: 10px;
+  text-justify: distribute-all-lines;
+  line-height: 200%;
+`;
+const Volume = styled.div`
+  text-align: start;
+  font-size: 16px;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 12px 10px;
+  border-radius: 10px;
+  text-justify: distribute-all-lines;
+  line-height: 200%;
+`;
 
-const PercentChange = styled.div``;
+const PercentChange = styled.div`
+  text-align: center;
+
+  font-size: 20px;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 12px 0px;
+  border-radius: 10px;
+`;
 
 interface PriceData {
-  quotes: {
-    USD: {
+  quotes?: {
+    USD?: {
       ath_date: string;
       ath_price: number;
       market_cap: number;
@@ -47,35 +81,31 @@ function Price({ coinId }: PriceProps) {
       {isLoading ? (
         "Loading price..."
       ) : (
-        <>
-          <PriceBox>
+        <PriceBox>
+          <PriceDetail>
             <MarketCap>
-              <span>Market Cap: ${tickersData?.quotes.USD.market_cap}</span>{" "}
-              <br></br>
               <span>
-                Market Cap 24h: {tickersData?.quotes.USD.market_cap_change_24h}%
+                Market Cap:
+                <br></br>$ {tickersData?.quotes?.USD?.market_cap}
+                <br></br> {tickersData?.quotes?.USD?.market_cap_change_24h}%
               </span>
-              <br></br>
             </MarketCap>
             <Volume>
               <span>
-                Volume: ${tickersData?.quotes.USD.volume_24h.toFixed(3)}
+                Volume:
+                <br></br>$ {tickersData?.quotes?.USD?.volume_24h.toFixed(3)}
+                <br></br> {tickersData?.quotes?.USD?.volume_24h_change_24h}%
               </span>
-              <br></br>
-              <span>
-                Volume 24h: {tickersData?.quotes.USD.volume_24h_change_24h}%
-              </span>
-              <br></br>
             </Volume>
-            <PercentChange>
-              <span>
-                Percent from all time high:
-                {tickersData?.quotes.USD.percent_from_price_ath}%
-              </span>
-              <br></br>
-            </PercentChange>
-          </PriceBox>
-        </>
+          </PriceDetail>
+          <PercentChange>
+            <span>
+              Percent from all time high:{" "}
+              {tickersData?.quotes?.USD?.percent_from_price_ath}%
+            </span>
+            <br></br>
+          </PercentChange>
+        </PriceBox>
       )}
     </div>
   );

@@ -47,15 +47,18 @@ function Chart({ coinId }: ChartProps) {
             theme: {
               mode: isDark ? "light" : "dark",
             },
+
             chart: {
               type: "candlestick",
-              height: 350,
-              width: 500,
+              height: 300,
+              width: 400,
+              background: "#35383bea",
+
               toolbar: {
                 show: false,
               },
-              background: "transparent",
             },
+
             stroke: {
               curve: "smooth",
               width: 2,
@@ -68,15 +71,15 @@ function Chart({ coinId }: ChartProps) {
               categories: data?.map((price) => price.time_close),
               labels: {
                 style: {
-                  colors: "#9c88ff",
+                  colors: "white",
                 },
               },
             },
             plotOptions: {
               candlestick: {
                 colors: {
-                  upward: "#3C90EB",
-                  downward: "#DF7D46",
+                  upward: "#D24F45",
+                  downward: "#0062DF",
                 },
               },
             },

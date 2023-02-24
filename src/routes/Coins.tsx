@@ -8,6 +8,7 @@ import { useSetRecoilState } from "recoil";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon } from "@fortawesome/free-solid-svg-icons";
 import { faSun } from "@fortawesome/free-solid-svg-icons";
+import { faCoins } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -107,7 +108,9 @@ function Coins({}: ICoinsProps) {
       </button>
       <Header>
         <Title>
-          <Link to="/">COIN</Link>
+          <Link to="/">
+            <FontAwesomeIcon icon={faCoins} /> COIN
+          </Link>
         </Title>
       </Header>
       {isLoading ? (

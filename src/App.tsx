@@ -3,7 +3,6 @@ import Router from "./Router";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "./theme";
-import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { isDarkAtom } from "./atoms";
 

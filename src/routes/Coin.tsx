@@ -17,14 +17,33 @@ import { useSetRecoilState } from "recoil";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon } from "@fortawesome/free-solid-svg-icons";
 import { faSun } from "@fortawesome/free-solid-svg-icons";
+import { faCoins } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   padding: 0px 20px;
   max-width: 700px;
   margin: 0 auto;
+`;
+
+const CoinPageButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const ToggleButton = styled.div`
   button {
     margin-top: 15px;
-
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    line-height: 1.5;
+    border: 1px solid lightgray;
+    color: gray;
+    background: white;
+  }
+`;
+const BackButton = styled.div`
+  button {
+    margin-top: 15px;
     padding: 6px 12px;
     border-radius: 8px;
     font-size: 1rem;
@@ -55,7 +74,7 @@ const Loader = styled.span`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -86,7 +105,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   padding: 7px 0px;
   border-radius: 10px;
   color: ${(props) =>
@@ -136,8 +155,8 @@ interface PriceData {
   beta_value: number;
   first_data_at: string;
   last_updated: string;
-  quotes: {
-    USD: {
+  quotes?: {
+    USD?: {
       ath_date: string;
       ath_price: number;
       market_cap: number;
@@ -201,17 +220,24 @@ function Coin() {
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </title>
       </Helmet>
-      <button onClick={toggleDarkAtom}>
-        <FontAwesomeIcon icon={faSun} /> / {""}
-        <FontAwesomeIcon icon={faMoon} />
-      </button>
+      <CoinPageButton>
+        <ToggleButton>
+          <button onClick={toggleDarkAtom}>
+            <FontAwesomeIcon icon={faSun} /> / {""}
+            <FontAwesomeIcon icon={faMoon} />
+          </button>
+        </ToggleButton>
+        <BackButton>
+          <button>
+            <Link to="/"> &larr; back</Link>
+          </button>
+        </BackButton>
+      </CoinPageButton>
       <Header>
         <Title>
+          <FontAwesomeIcon icon={faCoins} />{" "}
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
-        <button>
-          <Link to="/">back</Link>
-        </button>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
@@ -228,7 +254,7 @@ function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Current Price:</span>
-              <span>${tickersData?.quotes.USD.price.toFixed(5)}</span>
+              <span>${tickersData?.quotes?.USD?.price.toFixed(5)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
